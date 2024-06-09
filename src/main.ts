@@ -1,5 +1,5 @@
-import App from "./app"
+import Express from "./infra/http/express"
 
-const app = new App()
+const express = new Express()
 
-app.listen()
+express.listen()
