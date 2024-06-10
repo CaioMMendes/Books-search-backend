@@ -15,6 +15,7 @@ export const bookSchema = z.object({
   status: z.string(),
   authors: z.array(z.string()),
   categories: z.array(z.string()),
+  embeddings: z.array(z.number()).optional(),
 })
 
 export type BookDto = z.infer<typeof bookSchema>

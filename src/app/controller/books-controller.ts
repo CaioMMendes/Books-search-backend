@@ -34,17 +34,17 @@ class BooksController {
 
   async find(httpRequest: HttpRequest): Promise<HttpResponse> {
     try {
-      const dto: BookDto = httpRequest.query
+      const search: string = httpRequest.query.search
 
-      if (!dto) {
+      if (!search) {
         return {
           status: 400,
           message: "Missing query",
         }
       }
 
-      const response = await this.booksUseCase.findBook(dto)
-
+      const response = await this.booksUseCase.findBook(search)
+      console.log(response)
       return {
         status: 200,
         message: "Livro encontrado com sucesso",
@@ -74,13 +74,13 @@ class BooksController {
 
       return {
         status: 200,
-        message: "Livro encontrado com sucesso",
+        message: "Livro atualizado com sucesso",
         data: response,
       }
     } catch (error) {
       return {
         status: 400,
-        message: "Ocorreu um erro ao tentar encontrar o livro",
+        message: "Ocorreu um erro ao tentar atualizar o livro",
         error: error,
       }
     }

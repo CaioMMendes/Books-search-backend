@@ -1,5 +1,5 @@
 import { NextFunction, Request, Response } from "express"
-import { HttpRequest } from "../http/http-adapter"
+import { HttpRequest, HttpResponse } from "../http/http-adapter"
 import { errorMiddleware } from "../middleware/error-middleware"
 
 const routerAdapter = (controller: any, method: string) => {
@@ -11,12 +11,13 @@ const routerAdapter = (controller: any, method: string) => {
       query: req.query,
     }
 
-    const httpResponse = await controller[method](httpRequest)
+    const httpResponse: HttpResponse = await controller[method](httpRequest)
+    console.log(httpResponse)
 
-    if (httpResponse.status >= 200 && httpResponse <= 299) {
+    if (httpResponse.status >= 200 && httpResponse.status <= 299) {
       return res.status(httpResponse.status).json(httpResponse)
     } else {
-      return errorMiddleware(httpResponse, req, res, next)
+      return errorMiddleware(httpResponse?.error, req, res, next)
     }
   }
 }
